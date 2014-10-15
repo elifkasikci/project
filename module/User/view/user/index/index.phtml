@@ -1,0 +1,43 @@
+<?php
+
+
+
+if($this->view['type'] == "list"){
+
+
+echo '
+<div class="table-responsive">
+   <table class="table">
+      <caption>Members</caption>
+      <thead>
+         <tr>
+            <th>Member Id</th>
+            <th>Email</th>
+            <th>Birthday</th>
+         </tr>
+      </thead>
+      <tbody>
+';
+
+     foreach($this->view['data'] as $row_id => $member){
+        echo '<tr>
+            <td>'.$member['id'].'</td>
+            <td>'.$member['email'].'</td>
+            <td>'.$member['birthday'].'</td>
+         </tr>';
+     }
+
+
+  echo ' </tbody>
+   </table>
+</div>
+';
+
+}
+?>
+<form action="/user/index" method="post">
+    Email: <input type="text" name="email_form"><br>
+    Password:<input type="text" name="password_form"><br>
+    <input type="submit" name="login"  value="login"><br>
+    <input type="reset" name="reset"><br><br>
+</form>
