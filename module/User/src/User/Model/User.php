@@ -20,21 +20,22 @@ class User {
 
 
     public function checkUser($data) {
-       $user= $_SESSION['email'] ;
-       $password_form=$_SESSION['password'];
 
-
-       $result=pg_query($this->_connection,"select * from members where email='$user' and password='$password_form'  ");
+       $result=pg_query($this->_connection,"select * from members where email='".$data['email']."' and password='".$data['password']."'");
        $result = pg_fetch_all($result);
-//
-//       if(($email==$user) and ($password==$password)){
-//
-//        }
+
        return $result;
 
     }
 
 
+    public function getUser($id){
+        $result=pg_query($this->_connection,"select * from members where id='".$id."' ");
+        $result = pg_fetch_all($result);
+        return $result;
+    }
 
+
+ 
 
 }
