@@ -14,7 +14,7 @@ class User {
     private $_connection;
 
      public function __construct(){
-        $this->_connection = pg_connect("host=localhost dbname=postgres port=5432 user=postgres password=1234");
+        $this->_connection = pg_connect("host=localhost dbname=postgres port=5432 user=postgres password=123");
 
     }
 
