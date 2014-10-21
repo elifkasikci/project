@@ -14,7 +14,7 @@ class User {
     private $_connection;
 
      public function __construct(){
-        $this->_connection = pg_connect("host=localhost dbname=postgres port=5432 user=postgres password=1234");
+        $this->_connection = pg_connect("host=localhost dbname=postgres port=5432 user=postgres password=123");
 
     }
 
@@ -35,7 +35,34 @@ class User {
         return $result;
     }
 
+    public function update($post){
 
+
+        $sql = "UPDATE members SET ";
+
+        $index = 0;
+        $post_numbers = count($post);
+
+        foreach ($post as $key => $value) {
+            $index++;
+            if($value) {
+
+                if($index == $post_numbers) {
+                    $sql .= $key."='".$value."'";
+                }else{
+                    $sql .= $key."='".$value."',";
+                }
+
+            }
+
+        }
+
+        $sql .= " where id = ".$_SESSION['id'];
+        $result=pg_query($this->_connection,$sql);
+        echo $sql;
+
+
+    }
  
 
 }

@@ -17,9 +17,20 @@ use Zend\Mvc\Controller\Plugin\Forward;
 
 class IndexController extends AbstractActionController
 {
+    public function __construct(){
+
+        session_start();
+
+    }
     public function indexAction()
     {
-        return new ViewModel();
+        if($_SESSION['id'] != null){
+
+            return new ViewModel(array('status'=>true));
+        }
+        else{
+            return new ViewModel(array('status'=>false));
+        }
 
     }
 
@@ -39,30 +50,43 @@ class IndexController extends AbstractActionController
 
             $viewData['login'] = true;
             $viewData['data'] = $result;
-            session_start();
+
             $_SESSION['id'] = $result[0]['id'];
             return new ViewModel(array('view' => $viewData));
 
         } elseif($result == false) {
+            echo"Wrong Username/Password";
 
 
-
-          return  $this-> forward('page-not-found', 'error');
+            return $this-> forward('page-not-found', 'error');
         }
-
 
     }
 
     public function showAction()
     {
-        session_start();
         $userModel = new User();
         $result = $userModel->getUser($_SESSION['id']);
         return new ViewModel(array('user' => $result[0]));
 
+
     }
 
-   
+
+    public function updateAction(){
+
+        $viewModel = new ViewModel();
+        $userModel = new User();
+        $result = $userModel->update($this->getRequest()->getPost());
+
+
+
+
+        $viewModel->setVariables(array('result' => true))->setTerminal(true);
+
+        return $viewModel;
+
+    }
 
 
 }
