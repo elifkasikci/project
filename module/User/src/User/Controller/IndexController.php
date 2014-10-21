@@ -58,7 +58,7 @@ class IndexController extends AbstractActionController
             echo"Wrong Username/Password";
 
 
-          return  $this-> forward('page-not-found', 'error');
+            return $this-> forward('page-not-found', 'error');
         }
 
     }
@@ -68,6 +68,23 @@ class IndexController extends AbstractActionController
         $userModel = new User();
         $result = $userModel->getUser($_SESSION['id']);
         return new ViewModel(array('user' => $result[0]));
+
+
+    }
+
+
+    public function updateAction(){
+
+        $viewModel = new ViewModel();
+        $userModel = new User();
+        $result = $userModel->update($this->getRequest()->getPost());
+
+
+
+
+        $viewModel->setVariables(array('result' => true))->setTerminal(true);
+
+        return $viewModel;
 
     }
 
