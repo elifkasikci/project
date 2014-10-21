@@ -13,7 +13,7 @@ namespace User\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Model\User as User;
-use Zend\Mvc\Controller\Plugin\Forward;
+
 
 class IndexController extends AbstractActionController
 {

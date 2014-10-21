@@ -38,28 +38,10 @@ class User {
     public function update($post){
 
 
-        $sql = "UPDATE members SET ";
+        $sql = "UPDATE members SET school='".$post['school']."', birthday = '".$post['birthday']."' where id = ".$_SESSION['id'];;
 
-        $index = 0;
-        $post_numbers = count($post);
 
-        foreach ($post as $key => $value) {
-            $index++;
-            if($value) {
-
-                if($index == $post_numbers) {
-                    $sql .= $key."='".$value."'";
-                }else{
-                    $sql .= $key."='".$value."',";
-                }
-
-            }
-
-        }
-
-        $sql .= " where id = ".$_SESSION['id'];
-        $result=pg_query($this->_connection,$sql);
-        echo $sql;
+        pg_query($this->_connection,$sql);
 
 
     }
