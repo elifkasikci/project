@@ -1,18 +1,15 @@
 <?php
 if($this->status == 0) {
-    echo'
+    echo' Kullanıcı Girişi
 <form action="/user/index/login" method="post">
-    Email: <input type="text" name="email_form"><br>
-    Password:<input type="text" name="password_form"><br>
-    <input type="submit" name="login"  value="login"><br>
-    <input type="reset" name="reset"><br><br>
+    <input type="text" placeholder="email" name="email_form"><br>
+    <input type="text" placeholder="şifre" name="password_form"><br>
+    <input type="submit" name="login"  value="Giriş Yap">
 </form>';
 }
 elseif($this->status == 1){
 
-    echo'welcome';
-    echo '<form action="/user/index/show" method="post">
-<input type="submit" value="show information">
-</form>';
+   header("Location: http://rdcproject/hangman/index");
+
 }
 

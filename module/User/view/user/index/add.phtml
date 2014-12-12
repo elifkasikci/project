@@ -1,0 +1,20 @@
+<?php
+if($this->status == 0) {
+    echo 'Kullanıcı Kaydı
+<form action="/user/index/add" method="post">
+    <input type="text" placeholder="kullanıcı adı" name="username"><br>
+    <input type="text" placeholder="email" name="email"><br>
+    <input type="text" placeholder="şifre" name="password"><br>
+    <input type="submit" name="add"  value="Kaydet">
+</form>';
+}
+
+else {
+    echo "Kayıt başarılı. Giriş ekranına yönlendiriliyorsunuz.";
+    header( "refresh:4;url=/user/index" );
+}
+
+
+
+
+

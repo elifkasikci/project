@@ -1,0 +1,26 @@
+@import url(http://fonts.googleapis.com/css?family=Permanent+Marker);
+
+body {
+    background: url('http://www.writteninpencil.de/Projekte/Hangman/hangman-bg.png') fixed;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
+input {
+    border: 2px solid #999;
+    font-family: Helvetica, sans-serif;
+    color: #000000;
+}
+
+#ratefield {
+    font-family: 'Arial', 'cursive';
+    font-size: 2.0em;
+}
+
+#alphabet {font-size: 19px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    text-decoration: none;}
+
+h1 {
+    font-family: 'Permanent Marker', 'cursive';
+}

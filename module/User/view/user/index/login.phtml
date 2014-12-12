@@ -1,7 +1,10 @@
 <?php
+if($this->status==true){
 
-echo 'welcome';
-echo '<form action="/user/index/show" method="post">
-<input type="submit" value="show information">
-</form>';
-?>
+    header("Location: http://rdcproject/hangman/index");
+
+
+}
+elseif($this->status==false){
+    echo 'Yanlış kullanıcı adı/şifre. Lütfen tekrar giriş <a href="/user/index">yapınız.</a>';
+}

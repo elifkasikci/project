@@ -10,83 +10,77 @@
 
 namespace User\Controller;
 
+use User\Entity\GameUser;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use User\Model\User as User;
-use Zend\Mvc\Controller\Plugin\Forward;
 
 class IndexController extends AbstractActionController
 {
+
+
     public function __construct(){
-
         session_start();
-
     }
-    public function indexAction()
-    {
+
+    public function indexAction(){
+
         if($_SESSION['id'] != null){
 
             return new ViewModel(array('status'=>true));
         }
         else{
+
             return new ViewModel(array('status'=>false));
         }
 
     }
 
-    public function loginAction()
-    {
-        $viewData = Array();
+    public function loginAction(){
 
-        $information = Array();
-        $information['email'] = $_POST['email_form'];
-        $information['password'] = $_POST['password_form'];
-
-        $userModel = new User();
-        $result = $userModel->checkUser($information);
-
-
-        if ($result == true) {
-
-            $viewData['login'] = true;
-            $viewData['data'] = $result;
-
-            $_SESSION['id'] = $result[0]['id'];
-            return new ViewModel(array('view' => $viewData));
-
-        } elseif($result == false) {
-            echo"Wrong Username/Password";
-
-
-            return $this-> forward('page-not-found', 'error');
+        if($_SESSION['id'] != null){
+            return $this->redirect()->toUrl('http://rdcproject/user/index');
         }
 
+        $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+        $memberRepository = $entityManager->getRepository('\User\Entity\GameUser');
+
+        $login = $memberRepository->findBy(array('email'=>$_POST['email_form'],'password'=>$_POST['password_form']));
+
+        if(empty($login)){
+            return new ViewModel(array('status' => false));
+
+        }
+        else{
+            $_SESSION['id'] = $login[0]->getId();
+            $_SESSION['email'] = $login[0]->getEmail();
+            return new ViewModel(array('status' => true));
+        }
     }
 
-    public function showAction()
-    {
-        $userModel = new User();
-        $result = $userModel->getUser($_SESSION['id']);
-        return new ViewModel(array('user' => $result[0]));
+    public function addAction(){
 
+        if($_POST['username'] && $_POST['email'] && $_POST['password']){
 
+            $entityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+            $userAdd = new GameUser();
+            $userAdd->setUsername($_POST['username']);
+            $userAdd->setPassword($_POST['password']);
+            $userAdd->setEmail($_POST['email']);
+
+            $entityManager->persist($userAdd);
+            $entityManager->flush();
+
+        return new ViewModel(array('status' => true));
+        }
+        else {
+            return new ViewModel(array('status' => false));
+        }
     }
 
-
-    public function updateAction(){
-
-        $viewModel = new ViewModel();
-        $userModel = new User();
-        $result = $userModel->update($this->getRequest()->getPost());
-
-
-
-
-        $viewModel->setVariables(array('result' => true))->setTerminal(true);
-
-        return $viewModel;
-
+    public function logoutAction(){
+        session_destroy();
+        return $this->redirect()->toUrl('http://rdcproject/user/index');
     }
-
 
 }
